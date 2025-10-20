@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: kartoza/postgis:17-3.5
+    container_name: postgres_postgis
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "40010:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql
+      - ./initdb:/docker-entrypoint-initdb.d
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB -h 127.0.0.1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  pgadmin4:
+    image: dpage/pgadmin4:9.9
+    container_name: pgadmin4
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file: .env
+    ports:
+      - "40012:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json:ro
+      - ./pgadmin/pgpass:/pgpass:ro
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  pg_data:
+    driver: local
+  pgadmin_data:
+    driver: local

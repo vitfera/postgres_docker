@@ -1,0 +1,36 @@
+# Arquivos de ambiente
+.env
+
+# Dumps de banco de dados
+*.dump
+*.sql.gz
+*.backup
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Diretórios de dados dos containers
+data/
+backups/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos do IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (se houver)
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
