@@ -5,6 +5,7 @@
 *.dump
 *.sql.gz
 *.backup
+*.sql
 
 # Logs
 *.log
